@@ -23,16 +23,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
-
     @BindView(R.id.fl_main)
     FrameLayout flMain;
     @BindView(R.id.rg_main)
     RadioGroup rgMain;
-
     private ArrayList<BaseFragment> fragments;
-
     private Fragment tempFragment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initFragment();
         initListener();
+        //法一
         switchFragment (0);
 //        rgMain.check(R.id.rb_home);
     }
-
     private void initListener() {
         rgMain.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -66,9 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 switchFragment(postion);
             }
         });
-
     }
-
     private void switchFragment(int postion) {
         Fragment currentFragment = fragments.get(postion);
         if(tempFragment != currentFragment) {
@@ -84,13 +78,10 @@ public class MainActivity extends AppCompatActivity {
                 }
                 ft.show(currentFragment);
             }
-
             ft.commit();
             tempFragment = currentFragment;
-
         }
     }
-
     private void initFragment() {
         fragments = new ArrayList<>();
         fragments.add(new HomeFragment());
@@ -98,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
         fragments.add(new ProperyFragment());
         fragments.add(new MoreFragment());
     }
-
     private boolean isDouble = false;
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
@@ -116,11 +106,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 },2000);
             }
-
             return true;
         }
-
-        
         return super.onKeyUp(keyCode, event);
     }
 }
