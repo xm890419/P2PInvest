@@ -59,7 +59,8 @@ public class AppManager {
         }
     }
     public void removeCurrentActivity(){
-        Activity activity = stack.get(stack.size() - 1);
+        //Activity activity = stack.get(stack.size() - 1);
+        Activity activity = stack.lastElement();
         activity.finish();
         stack.remove(activity);
     }
