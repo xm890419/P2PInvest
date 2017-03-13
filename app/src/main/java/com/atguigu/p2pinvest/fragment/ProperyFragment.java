@@ -1,10 +1,5 @@
 package com.atguigu.p2pinvest.fragment;
 
-import android.graphics.Color;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.TextView;
-
 import com.atguigu.p2pinvest.base.BaseFragment;
 
 /**
@@ -12,19 +7,27 @@ import com.atguigu.p2pinvest.base.BaseFragment;
  */
 
 public class ProperyFragment extends BaseFragment {
-    private TextView textView;
-    @Override
+    //private TextView textView;
+    /*@Override
     public View initView() {
         textView = new TextView(mContext);
         textView.setTextColor(Color.RED);
         textView.setGravity(Gravity.CENTER);
         textView.setTextSize(25);
         return textView;
+    }*/
+
+    @Override
+    protected void initListener() {
+
     }
 
     @Override
     public void initData() {
-        super.initData();
-        textView.setText("个人资产");
+    }
+
+    @Override
+    protected int getLayoutid() {
+        return 0;
     }
 }

@@ -27,7 +27,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by 熊猛 on 2017/3/10.
@@ -50,25 +49,30 @@ public class HomeFragment extends BaseFragment {
     MyProgress homeProgress;
 
     //private TextView textView;
-    @Override
+    /*@Override
     public View initView() {
-        /*textView = new TextView(mContext);
+        *//*textView = new TextView(mContext);
         textView.setTextColor(Color.RED);
         textView.setGravity(Gravity.CENTER);
-        textView.setTextSize(25);*/
+        textView.setTextSize(25);*//*
         View view = View.inflate(mContext, R.layout.fragment_home, null);
         ButterKnife.bind(this, view);
         return view;
+    }*/
+
+    @Override
+    protected void initListener() {
+        tvTitle.setText("首页");
+        ivTitleBack.setVisibility(View.GONE);
+        ivTitleSetting.setVisibility(View.GONE);
     }
 
     @Override
     public void initData() {
-        super.initData();
+
         /*Log.e("TAG", "首页数据加载成功");
         textView.setText("首页");*/
-        tvTitle.setText("首页");
-        ivTitleBack.setVisibility(View.GONE);
-        ivTitleSetting.setVisibility(View.GONE);
+
         /*
          * 二次封装
          * 为什么要二次封装
@@ -95,6 +99,11 @@ public class HomeFragment extends BaseFragment {
                 Log.i("http", "failure: " + error);
             }
         });
+    }
+
+    @Override
+    protected int getLayoutid() {
+        return R.layout.fragment_home;
     }
 
     private void initProgress(final HomeBean.ProInfoBean proInfo) {
