@@ -20,6 +20,9 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         context = this;
+
+        //初始化未捕获异常 上线的时候才打开
+        //CrashHandler.getInstance().init();
     }
 
     public static Context getContext() {
