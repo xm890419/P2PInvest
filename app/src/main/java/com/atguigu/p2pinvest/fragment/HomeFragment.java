@@ -2,7 +2,6 @@ package com.atguigu.p2pinvest.fragment;
 
 import android.content.Context;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,8 +12,6 @@ import com.atguigu.p2pinvest.base.BaseFragment;
 import com.atguigu.p2pinvest.bean.HomeBean;
 import com.atguigu.p2pinvest.ui.MyProgress;
 import com.atguigu.p2pinvest.utils.AppNetConfig;
-import com.atguigu.p2pinvest.utils.LoadNet;
-import com.atguigu.p2pinvest.utils.LoadNetHttp;
 import com.atguigu.p2pinvest.utils.ThreadPool;
 import com.squareup.picasso.Picasso;
 import com.youth.banner.Banner;
@@ -61,6 +58,11 @@ public class HomeFragment extends BaseFragment {
     }*/
 
     @Override
+    protected String getChildUrl() {
+        return AppNetConfig.INDEX;
+    }
+
+    @Override
     protected void initListener() {
         tvTitle.setText("首页");
         ivTitleBack.setVisibility(View.GONE);
@@ -68,18 +70,26 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
-    public void initData() {
+    public void initData(String json) {
+        HomeBean homeBean = JSON.parseObject(json, HomeBean.class);
+        //Log.i("http", "success: "+homeBean.getImageArr().size());
+        tvHomeYearrate.setText(homeBean.getProInfo().getYearRate() + "%");
+        tvHomeProduct.setText(homeBean.getProInfo().getName());
+        //注意：展示UI一定要判断是不是主线程
 
-        /*Log.e("TAG", "首页数据加载成功");
-        textView.setText("首页");*/
+        initProgress(homeBean.getProInfo());
+        initBanner(homeBean);
 
-        /*
+       /* *//*Log.e("TAG", "首页数据加载成功");
+        textView.setText("首页");*//*
+
+        *//*
          * 二次封装
          * 为什么要二次封装
          *
          * 第一  调用的方便
          * 第二  修改和维护方便
-         * */
+         * *//*
         LoadNet.getDataPost(AppNetConfig.INDEX, new LoadNetHttp() {
             @Override
             public void success(String context) {
@@ -98,7 +108,7 @@ public class HomeFragment extends BaseFragment {
             public void failure(String error) {
                 Log.i("http", "failure: " + error);
             }
-        });
+        });*/
     }
 
     @Override

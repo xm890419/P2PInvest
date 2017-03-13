@@ -82,6 +82,11 @@ public class MyProgress extends View {
         paint.setAntiAlias(true);
     }
 
+    /**
+     * 注意 构造器只会调用一次 onDraw方法会调用多闪
+     * 在构造器里初始化的数据 一定要是通用的（不变的）
+     * 否则会在第二次onDraw的时候进行覆盖
+     */
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -107,7 +112,7 @@ public class MyProgress extends View {
                 measureWidth - roundWidth / 2, measuredHeight - roundWidth / 2);
         paint.setColor(sweepColor);
         //第二个参数是起始角 第三个参数多少度
-        canvas.drawArc(rectF, 0, sweepArc * 360 /100, false, paint);
+        canvas.drawArc(rectF, 0, sweepArc * 360 / 100, false, paint);
 
         //画文字
         String text = sweepArc + "%";

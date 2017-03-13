@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.atguigu.p2pinvest.ui.LoadingPager;
+
 import butterknife.ButterKnife;
 
 /**
@@ -39,27 +41,49 @@ public abstract class BaseFragment extends Fragment {
     public void initData() {
 
     }*/
+    private LoadingPager loadingPager;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = View.inflate(getActivity(), getLayoutid(), null);
+        /*View view = View.inflate(getActivity(), getLayoutid(), null);
         ButterKnife.bind(this, view);
-        return view;
+        return view;*/
+        loadingPager = new LoadingPager(getActivity()) {
+            @Override
+            protected void onSuccess(ResultState resultState, View sucessView) {
+
+                ButterKnife.bind(BaseFragment.this,sucessView);
+                initData(resultState.getJson());
+            }
+
+            @Override
+            protected String getUrl() {
+                return getChildUrl();
+            }
+
+            @Override
+            public int getViewId() {
+                return getLayoutid();
+            }
+        };
+        return loadingPager;
     }
+
+    protected abstract String getChildUrl();
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //初始化数据
-        initData();
+        loadingPager.loadData();
         //初始化监听
-        initListener();
+       // initListener();
     }
 
     protected abstract void initListener();
 
-    protected abstract void initData();
+    protected abstract void initData(String json);
 
     protected abstract int getLayoutid();
 }

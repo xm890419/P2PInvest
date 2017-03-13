@@ -18,12 +18,17 @@ public class InvestFragment extends BaseFragment {
     }*/
 
     @Override
+    protected String getChildUrl() {
+        return null;
+    }
+
+    @Override
     protected void initListener() {
 
     }
 
     @Override
-    public void initData() {
+    public void initData(String json) {
     }
 
     @Override
