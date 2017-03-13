@@ -1,8 +1,12 @@
 package com.atguigu.p2pinvest.fragment;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -10,9 +14,11 @@ import com.alibaba.fastjson.JSON;
 import com.atguigu.p2pinvest.R;
 import com.atguigu.p2pinvest.base.BaseFragment;
 import com.atguigu.p2pinvest.bean.HomeBean;
+import com.atguigu.p2pinvest.ui.MyProgress;
 import com.atguigu.p2pinvest.utils.AppNetConfig;
 import com.atguigu.p2pinvest.utils.LoadNet;
 import com.atguigu.p2pinvest.utils.LoadNetHttp;
+import com.atguigu.p2pinvest.utils.ThreadPool;
 import com.squareup.picasso.Picasso;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -43,6 +49,8 @@ public class HomeFragment extends BaseFragment {
     TextView tvHomeProduct;
     @BindView(R.id.tv_home_yearrate)
     TextView tvHomeYearrate;
+    @BindView(R.id.home_progress)
+    MyProgress homeProgress;
 
     //private TextView textView;
     @Override
@@ -80,12 +88,27 @@ public class HomeFragment extends BaseFragment {
                 tvHomeYearrate.setText(homeBean.getProInfo().getYearRate() + "%");
                 tvHomeProduct.setText(homeBean.getProInfo().getName());
                 //注意：展示UI一定要判断是不是主线程
+
+                initProgress(homeBean.getProInfo());
                 initBanner(homeBean);
             }
 
             @Override
             public void failure(String error) {
                 Log.i("http", "failure: " + error);
+            }
+        });
+    }
+
+    private void initProgress(final HomeBean.ProInfoBean proInfo) {
+        ThreadPool.getInstance().getGlobalThread().execute(new Runnable() {
+            @Override
+            public void run() {
+                int progress = Integer.parseInt(proInfo.getProgress());
+                for (int i = 0; i <= progress; i++) {
+                    SystemClock.sleep(30);
+                    homeProgress.setProgress(i);
+                }
             }
         });
     }
@@ -99,8 +122,8 @@ public class HomeFragment extends BaseFragment {
 
         //转化成url集合
         List<String> urls = new ArrayList<>();
-        for (int i = 0;i<homeBean.getImageArr().size();i++){
-            urls.add(AppNetConfig.BASE_URL+homeBean.getImageArr().get(i).getIMAURL());
+        for (int i = 0; i < homeBean.getImageArr().size(); i++) {
+            urls.add(AppNetConfig.BASE_URL + homeBean.getImageArr().get(i).getIMAURL());
         }
         //设置图片集合
         banner.setImages(urls);
@@ -119,6 +142,14 @@ public class HomeFragment extends BaseFragment {
         //banner设置方法全部调用完毕时最后调用
         banner.start();
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
     }
 
     public class GlideImageLoader extends ImageLoader {
