@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.atguigu.p2pinvest.utils.AppManager;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -28,6 +30,8 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         ButterKnife.bind(this);
+
+        AppManager.getInstance().addActivity(this);
         showAnimation();
         setVersion();
     }
@@ -79,5 +83,8 @@ public class WelcomeActivity extends AppCompatActivity {
         activityWelcome.setAnimation(animation);
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }
