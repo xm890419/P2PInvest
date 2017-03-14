@@ -55,6 +55,8 @@ public abstract class BaseFragment extends Fragment {
 
                 ButterKnife.bind(BaseFragment.this,sucessView);
                 initData(resultState.getJson());
+                //初始化监听  因为LoadingPager加载布局可能不成功，所以监听写这
+                initListener();
             }
 
             @Override
@@ -76,9 +78,10 @@ public abstract class BaseFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //初始化数据
+
+
+
         loadingPager.loadData();
-        //初始化监听
-       // initListener();
     }
 
     protected abstract void initListener();

@@ -58,16 +58,24 @@ public class HomeFragment extends BaseFragment {
     }*/
 
     @Override
-    protected String getChildUrl() {
+    public int getLayoutid() {
+        return R.layout.fragment_home;
+    }
+
+    @Override
+    public String getChildUrl() {
         return AppNetConfig.INDEX;
     }
 
     @Override
-    protected void initListener() {
+    public void initListener() {
+
         tvTitle.setText("首页");
         ivTitleBack.setVisibility(View.GONE);
         ivTitleSetting.setVisibility(View.GONE);
+
     }
+
 
     @Override
     public void initData(String json) {
@@ -111,10 +119,6 @@ public class HomeFragment extends BaseFragment {
         });*/
     }
 
-    @Override
-    protected int getLayoutid() {
-        return R.layout.fragment_home;
-    }
 
     private void initProgress(final HomeBean.ProInfoBean proInfo) {
         ThreadPool.getInstance().getGlobalThread().execute(new Runnable() {
