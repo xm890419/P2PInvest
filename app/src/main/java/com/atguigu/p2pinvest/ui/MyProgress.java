@@ -30,7 +30,7 @@ public class MyProgress extends View {
     //圆环的颜色
     private int roundColor;
     //圆环的宽度
-    private int roundWidth = UiUtils.dp2px(8);
+    private int roundWidth = UiUtils.dp2px(5);
     private int sweepArc = 60;
     //进度的颜色
     private int sweepColor = Color.RED;
@@ -120,7 +120,7 @@ public class MyProgress extends View {
         Rect rect = new Rect();
         paint.setColor(Color.BLUE);
         paint.setStrokeWidth(0);
-        paint.setTextSize(UiUtils.dp2px(25));
+        paint.setTextSize(UiUtils.dp2px(15));
         paint.getTextBounds(text, 0, text.length(), rect);
         float tx = measureWidth / 2 - rect.width() / 2;
         float ty = measuredHeight / 2 + rect.height() / 2;
