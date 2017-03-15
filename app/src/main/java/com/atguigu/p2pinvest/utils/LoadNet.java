@@ -47,7 +47,7 @@ public class LoadNet {
                 String value = map.get(key);
                 params.put(key,value);
             }
-            httpClient.post(url, new AsyncHttpResponseHandler() {
+            httpClient.post(url,params, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(String content) {
                     super.onSuccess(content);

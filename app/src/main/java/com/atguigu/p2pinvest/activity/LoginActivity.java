@@ -58,6 +58,12 @@ public class LoginActivity extends BaseActivity {
                 Login();
             }
         });
+        regitsterTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this,RegitsterActivity.class));
+            }
+        });
     }
 
     private void Login() {
@@ -72,7 +78,7 @@ public class LoginActivity extends BaseActivity {
             showToast("密码不能为空！！！");
             return;
         }
-        Map<String,String> map = new HashMap<>();
+        Map<String,String> map = new HashMap<String,String>();
         map.put("phone",phone);
         map.put("password",pwd);
         //去服务器登录
