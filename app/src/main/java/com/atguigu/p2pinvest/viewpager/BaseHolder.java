@@ -34,5 +34,5 @@ public abstract class BaseHolder<T> {
     }
 
     public abstract View initView();
-    protected abstract void setChildData();
+    public abstract void setChildData();
 }

@@ -36,7 +36,7 @@ public class InvestHolder extends BaseHolder<InvestAllBean.DataBean> {
     }
 
     @Override
-    protected void setChildData() {
+    public void setChildData() {
         InvestAllBean.DataBean dataBean = getT();
         pName.setText(dataBean.getName());
         pMoney.setText(dataBean.getMoney());

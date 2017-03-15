@@ -4,5 +4,6 @@
         <attr name="roundColor" format="color"></attr>
         <attr name="sweepColor" format="color"></attr>
         <attr name="sweepArc" format="integer"></attr>
+        <attr name="textSize" format="integer"></attr>
     </declare-styleable>
 </resources>

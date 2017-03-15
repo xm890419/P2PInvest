@@ -34,6 +34,7 @@ public class MyProgress extends View {
     private int sweepArc = 60;
     //进度的颜色
     private int sweepColor = Color.RED;
+    private int textSize;
 
     public MyProgress(Context context) {
         super(context);
@@ -63,6 +64,7 @@ public class MyProgress extends View {
         //第一个参数获取attrs里面的配置属性名，第二个参数设置默认值
         roundColor = typedArray.getColor(R.styleable.progress_roundColor, Color.GRAY);
         sweepColor = typedArray.getColor(R.styleable.progress_sweepColor, Color.RED);
+        textSize = typedArray.getInt(R.styleable.progress_textSize,UiUtils.dp2px(23));
         sweepArc = typedArray.getInteger(R.styleable.progress_sweepArc, 0);
         typedArray.recycle();
     }
@@ -120,7 +122,7 @@ public class MyProgress extends View {
         Rect rect = new Rect();
         paint.setColor(Color.BLUE);
         paint.setStrokeWidth(0);
-        paint.setTextSize(UiUtils.dp2px(15));
+        paint.setTextSize(textSize);
         paint.getTextBounds(text, 0, text.length(), rect);
         float tx = measureWidth / 2 - rect.width() / 2;
         float ty = measuredHeight / 2 + rect.height() / 2;
