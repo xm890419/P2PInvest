@@ -4,19 +4,20 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.atguigu.p2pinvest.activity.LoginActivity;
+import com.atguigu.p2pinvest.base.BaseActivity;
 import com.atguigu.p2pinvest.utils.AppManager;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeActivity extends BaseActivity {
 
     @BindView(R.id.iv_welcome_icon)
     ImageView ivWelcomeIcon;
@@ -28,12 +29,31 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
-        ButterKnife.bind(this);
 
+
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    protected void initData() {
         AppManager.getInstance().addActivity(this);
         showAnimation();
         setVersion();
+
+    }
+
+    @Override
+    protected void initTitle() {
+
+    }
+
+    @Override
+    public int getLayoutid() {
+        return R.layout.activity_welcome;
     }
 
     private void setVersion() {
@@ -69,9 +89,18 @@ public class WelcomeActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                //进入主页面
+                /*//进入主页面
                 startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-                finish();
+                finish();*/
+                if(isLogin()) {
+                    //登录过进入主界面
+                    startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+                    finish();
+                }else {
+                    //没有登录过进入登录界面
+                    startActivity(new Intent(WelcomeActivity.this,LoginActivity.class));
+                    finish();
+                }
             }
 
             @Override
@@ -81,6 +110,14 @@ public class WelcomeActivity extends AppCompatActivity {
         });
 
         activityWelcome.setAnimation(animation);
+    }
+
+    private boolean isLogin() {
+        String name = getUser().getData().getName();
+        if(TextUtils.isEmpty(name)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
