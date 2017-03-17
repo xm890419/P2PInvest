@@ -46,7 +46,10 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.RegitsterActivity"></activity>
+        <activity android:name=".activity.RegitsterActivity" />
+        <activity android:name=".activity.LineChartActivity" />
+        <activity android:name=".activity.ColumnActivity" />
+        <activity android:name=".activity.PieActivity"></activity>
     </application>
 
 </manifest>

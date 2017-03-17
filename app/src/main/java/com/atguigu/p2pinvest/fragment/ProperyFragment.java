@@ -1,11 +1,16 @@
 package com.atguigu.p2pinvest.fragment;
 
+import android.content.Intent;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.atguigu.p2pinvest.MainActivity;
 import com.atguigu.p2pinvest.R;
+import com.atguigu.p2pinvest.activity.ColumnActivity;
+import com.atguigu.p2pinvest.activity.LineChartActivity;
+import com.atguigu.p2pinvest.activity.PieActivity;
 import com.atguigu.p2pinvest.base.BaseFragment;
 import com.atguigu.p2pinvest.bean.UserInfo;
 import com.atguigu.p2pinvest.utils.AppNetConfig;
@@ -56,7 +61,24 @@ public class ProperyFragment extends BaseFragment {
 
     @Override
     protected void initListener() {
-
+        llTouzi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(),LineChartActivity.class));
+            }
+        });
+        llTouziZhiguan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(),ColumnActivity.class));
+            }
+        });
+        llZichan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(),PieActivity.class));
+            }
+        });
     }
 
     @Override
