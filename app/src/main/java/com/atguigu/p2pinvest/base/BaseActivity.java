@@ -2,12 +2,16 @@ package com.atguigu.p2pinvest.base;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.atguigu.p2pinvest.bean.DataBean;
 import com.atguigu.p2pinvest.bean.UserInfo;
+import com.atguigu.p2pinvest.utils.AppManager;
+
+import java.io.File;
 
 import butterknife.ButterKnife;
 
@@ -72,5 +76,33 @@ public abstract class BaseActivity extends AppCompatActivity {
     public Boolean isUpdate(){
         SharedPreferences sp = getSharedPreferences("image", MODE_PRIVATE);
         return sp.getBoolean("update",false);
+    }
+
+    //清除所有的sp操作
+    public void clearSp(){
+        SharedPreferences user = getSharedPreferences("user_info", MODE_PRIVATE);
+        SharedPreferences image = getSharedPreferences("image", MODE_PRIVATE);
+        user.edit().clear().commit();
+        image.edit().clear().commit();
+    }
+    //删除file
+    public void clearFile(){
+        File filesDir = null;
+        //判断是否挂载了sd卡
+        if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            filesDir = getExternalFilesDir("");
+
+        }else {
+            filesDir = getFilesDir();
+        }
+        //全路径
+        File path = new File(filesDir, "123.png");
+        if(path.exists()) {
+            path.delete();
+        }
+    }
+    //清除所有的activity
+    public void removeAllActivity(){
+        AppManager.getInstance().removeAll();
     }
 }

@@ -59,6 +59,22 @@ public class SettingActivity extends BaseActivity {
                 changeUserIcon();
             }
         });
+        btnUserLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /**
+                 将SP清除
+                 将File删除
+                 销毁所有的Activity
+                 重新进入主界面
+                 */
+                clearSp();
+                clearFile();
+                removeAllActivity();
+                startActivity(new Intent(SettingActivity.this,LoginActivity.class));
+                finish();
+            }
+        });
     }
 
     private String changeName[] = {"相机", "相册"};
@@ -92,7 +108,7 @@ public class SettingActivity extends BaseActivity {
             Bundle bundle = data.getExtras();
             // 获取相机返回的数据，并转换为图片格式
             Bitmap bitmap = (Bitmap) bundle.get("data");
-            Bitmap zoom = BitmapUtils.zoom(bitmap,UiUtils.dp2px(62), UiUtils.dp2px(62));
+            Bitmap zoom = BitmapUtils.zoom(bitmap, UiUtils.dp2px(62), UiUtils.dp2px(62));
             //处理成圆形头像
             Bitmap circleBitmap = BitmapUtils.circleBitmap(zoom);
             //设置图片
@@ -126,10 +142,10 @@ public class SettingActivity extends BaseActivity {
 
         try {
             //判断是否挂载了sd卡
-            if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 //外部存储路径
                 dir = getExternalFilesDir("");
-            }else {
+            } else {
                 dir = getFilesDir();//内部存储路径
             }
             //全路径
@@ -137,20 +153,20 @@ public class SettingActivity extends BaseActivity {
             //输出流
             os = new FileOutputStream(path);
             //第一个参数是图片的格式，第二个参数是图片的质量数值大的大质量高，第三个是输出流
-            bitmap.compress(Bitmap.CompressFormat.PNG,100,os);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
             //保存当前是否有更新
             saveImage(true);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
 
-                try {
-                    if(os != null) {
+            try {
+                if (os != null) {
                     os.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         }
     }
