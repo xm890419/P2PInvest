@@ -1,6 +1,9 @@
 package com.atguigu.p2pinvest.fragment;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -12,11 +15,18 @@ import com.atguigu.p2pinvest.activity.ColumnActivity;
 import com.atguigu.p2pinvest.activity.LineChartActivity;
 import com.atguigu.p2pinvest.activity.PieActivity;
 import com.atguigu.p2pinvest.activity.RechargeActivity;
+import com.atguigu.p2pinvest.activity.SettingActivity;
 import com.atguigu.p2pinvest.activity.WithDrawActivity;
 import com.atguigu.p2pinvest.base.BaseFragment;
 import com.atguigu.p2pinvest.bean.UserInfo;
 import com.atguigu.p2pinvest.utils.AppNetConfig;
+import com.atguigu.p2pinvest.utils.BitmapUtils;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import butterknife.BindView;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
@@ -46,6 +56,7 @@ public class ProperyFragment extends BaseFragment {
     TextView llTouziZhiguan;
     @BindView(R.id.ll_zichan)
     TextView llZichan;
+    private File dir;
     //private TextView textView;
     /*@Override
     public View initView() {
@@ -96,6 +107,12 @@ public class ProperyFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), WithDrawActivity.class));
             }
         });
+        tvSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SettingActivity.class));
+            }
+        });
     }
 
     @Override
@@ -122,6 +139,47 @@ public class ProperyFragment extends BaseFragment {
                 }).into(ivMeIcon);*/
         Picasso.with(getActivity()).load(AppNetConfig.BASE_URL + "/images/tx.png")
                 .transform(new CropCircleTransformation()).into(ivMeIcon);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MainActivity activity = (MainActivity) getActivity();
+        Boolean update = activity.isUpdate();
+        if (update) {
+            FileInputStream is = null;
+            try {
+                //判断是否挂载了sd卡
+                if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                    //外部存储路径
+                    dir = getActivity().getExternalFilesDir("");
+                } else {
+                    dir = getActivity().getFilesDir();
+                }
+                //全路径
+                File path = new File(dir, "123.png");
+                if (path.exists()) {
+                    is = new FileInputStream(path);
+                    Bitmap bitmap = BitmapFactory.decodeStream(is);
+                    //Bitmap zoom = BitmapUtils.zoom(bitmap, UiUtils.dp2px(62), UiUtils.dp2px(62));
+                    Bitmap circleBitmap = BitmapUtils.circleBitmap(bitmap);
+                    ivMeIcon.setImageBitmap(circleBitmap);
+                    activity.saveImage(false);
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (is != null) {
+                        is.close();
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
     }
 
     @Override
