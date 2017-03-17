@@ -11,6 +11,8 @@ import com.atguigu.p2pinvest.R;
 import com.atguigu.p2pinvest.activity.ColumnActivity;
 import com.atguigu.p2pinvest.activity.LineChartActivity;
 import com.atguigu.p2pinvest.activity.PieActivity;
+import com.atguigu.p2pinvest.activity.RechargeActivity;
+import com.atguigu.p2pinvest.activity.WithDrawActivity;
 import com.atguigu.p2pinvest.base.BaseFragment;
 import com.atguigu.p2pinvest.bean.UserInfo;
 import com.atguigu.p2pinvest.utils.AppNetConfig;
@@ -64,19 +66,34 @@ public class ProperyFragment extends BaseFragment {
         llTouzi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),LineChartActivity.class));
+                startActivity(new Intent(getActivity(), LineChartActivity.class));
             }
         });
         llTouziZhiguan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),ColumnActivity.class));
+                startActivity(new Intent(getActivity(), ColumnActivity.class));
             }
         });
         llZichan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),PieActivity.class));
+                startActivity(new Intent(getActivity(), PieActivity.class));
+            }
+        });
+
+        //充值的监听
+        recharge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), RechargeActivity.class));
+            }
+        });
+
+        withdraw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), WithDrawActivity.class));
             }
         });
     }
@@ -103,7 +120,7 @@ public class ProperyFragment extends BaseFragment {
                         return "";//不能为空否则会报错
                     }
                 }).into(ivMeIcon);*/
-        Picasso.with(getActivity()).load(AppNetConfig.BASE_URL+"/images/tx.png")
+        Picasso.with(getActivity()).load(AppNetConfig.BASE_URL + "/images/tx.png")
                 .transform(new CropCircleTransformation()).into(ivMeIcon);
     }
 
